@@ -8,7 +8,7 @@ import warning from './Event/warning.mp3';
 import noFood from './Event/no_food.wav';
 import { useAPI, useAudio } from '../hooks';
 import { today, parseQRCode } from '../util';
-
+import { usedDate } from '../util';
 const foodTypes = ticketTypeEnum.map(type => ({ key: type, value: type, text: type }));
 const functions = ["Scan QR-Code", "Available Tickets", "Used Tickets"];
 
@@ -144,10 +144,14 @@ export default () => {
     case functions[2]: // Used Tickets
       display = getTicketState.loading?<Loader active={true} />:(
         <CardGroup stackable>
-          {usedTickets.map(({owner}) => (
+          {usedTickets.map(({owner, usedTime}) => (
             <Card key={owner._id} link>
               <Card.Header as='h3'>{owner.name}</Card.Header>
-              <Card.Meta>{owner.email}</Card.Meta>
+              <Card.Meta>
+                {usedDate(usedTime)}
+                <br />
+                {owner.email}
+              </Card.Meta>
             </Card>
           ))}
         </CardGroup>
