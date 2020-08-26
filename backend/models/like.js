@@ -1,17 +1,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const TXSchema = new Schema({
-  from: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  to: {
+const LikeSchema = new Schema({
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  amount: {
+  event: {
+    type: Schema.Types.ObjectId,
+    ref: 'Event',
+    required: true
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  state: {
     type: Number,
     required: true
   },
@@ -22,7 +28,7 @@ const TXSchema = new Schema({
 });
 
 // Creating a table within database with the defined schema
-const TX = mongoose.model('TX', TXSchema);
+const Like = mongoose.model('Like', LikeSchema);
 
 // Exporting table for querying and mutating
-module.exports = TX;
+module.exports = Like;
